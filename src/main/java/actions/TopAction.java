@@ -9,8 +9,8 @@ import actions.views.EmployeeView; //追記
 import actions.views.ReportView; //追記
 import constants.AttributeConst;
 import constants.ForwardConst;
-import constants.JpaConst;  //追記
-import services.ReportService;  //追記
+import constants.JpaConst; //追記
+import services.ReportService; //追記
 
 /**
  * トップページに関する処理を行うActionクラス
