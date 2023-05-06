@@ -2,6 +2,7 @@ package actions;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -103,6 +104,8 @@ public class ReportAction extends ActionBase {
                 day = LocalDate.parse(getRequestParam(AttributeConst.REP_DATE));
             }
 
+
+
             //セッションからログイン中の従業員情報を取得
             EmployeeView ev = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
 
@@ -113,6 +116,8 @@ public class ReportAction extends ActionBase {
                     day,
                     getRequestParam(AttributeConst.REP_TITLE),
                     getRequestParam(AttributeConst.REP_CONTENT),
+                    LocalTime.parse(getRequestParam(AttributeConst.REP_START_TIME)),
+                    LocalTime.parse(getRequestParam(AttributeConst.REP_END_TIME)),
                     null,
                     null);
 
@@ -210,6 +215,8 @@ public class ReportAction extends ActionBase {
             rv.setReportDate(toLocalDate(getRequestParam(AttributeConst.REP_DATE)));
             rv.setTitle(getRequestParam(AttributeConst.REP_TITLE));
             rv.setContent(getRequestParam(AttributeConst.REP_CONTENT));
+            rv.setStartTime(toLocalTime(getRequestParam(AttributeConst.REP_START_TIME)));
+            rv.setEndTime(toLocalTime(getRequestParam(AttributeConst.REP_END_TIME)));
 
             //日報データを更新する
             List<String> errors = service.update(rv);
