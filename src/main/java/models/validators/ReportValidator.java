@@ -1,5 +1,6 @@
 package models.validators;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,11 @@ public class ReportValidator {
             errors.add(contentError);
         }
 
+        String timeError = validateTime(rv.getStartTime(), rv.getEndTime());
+        if (!timeError.equals("")) {
+            errors.add(timeError);
+        }
+
         return errors;
     }
 
@@ -59,6 +65,13 @@ public class ReportValidator {
         }
 
         //入力値がある場合は空文字を返却
+        return "";
+    }
+
+    private static String validateTime(LocalTime startTime, LocalTime endTime) {
+        if (startTime.isAfter(endTime)) {
+            return MessageConst.E_START_ENDTIME.getMessage();
+        }
         return "";
     }
 }

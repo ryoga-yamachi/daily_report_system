@@ -78,6 +78,8 @@ public class ReportAction extends ActionBase {
         //日報情報の空インスタンスに、日報の日付＝今日の日付を設定する
         ReportView rv = new ReportView();
         rv.setReportDate(LocalDate.now());
+        rv.setStartTime(LocalTime.of(9, 00));
+        rv.setEndTime(LocalTime.of(18,  00));
         putRequestScope(AttributeConst.REPORT, rv); //日付のみ設定済みの日報インスタンス
 
         //新規登録画面を表示
