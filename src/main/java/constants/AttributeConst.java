@@ -50,7 +50,22 @@ public enum AttributeConst {
     REP_TITLE("title"),
     REP_CONTENT("content_msg"),
     REP_START_TIME("start_time"),
-    REP_END_TIME("end_time");
+    REP_END_TIME("end_time"),
+
+    //顧客管理
+    CLIENT("client"),
+    CLIENTS("clients"),
+    CLI_COUNT("clients_count"),
+    CLI_ID("id"),
+    CLI_COMPANY("client_company"),
+    CLI_TITLE("title"),
+    CLI_PROGRESS("progress"),
+    CLI_CONTENT("content_msg"),
+    CLI_EMPLOYEE("employee"),
+
+    PRO_NEGOTIATION(0),
+    PRO_WIP(1),
+    PRO_END(2);
 
 
     private final String text;

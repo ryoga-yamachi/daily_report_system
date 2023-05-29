@@ -152,10 +152,34 @@ table#report_list .report_start_time {
 table#report_list .report_end_time {
     width: 17%;
 }
-
 table#report_list .report_action {
     width: 10%;
 }
 h3 {
     font-size: larger;
 }
+table#client_list th {
+    font-weight: bold;
+    padding: 10px 2%;
+}
+
+table#client_list .client_company {
+    width: 35%;
+    padding: 10px 2%;
+}
+table#client_list .client_title {
+    width: 35%;
+}
+
+table#client_list .client_progress {
+    width: 10%;
+}
+
+table#client_list .client_content {
+    width: 10%;
+}
+
+table#client_list .client_employee {
+    width: 10%;
+}
+
