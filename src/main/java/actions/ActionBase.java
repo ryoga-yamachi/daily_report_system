@@ -192,6 +192,15 @@ public abstract class ActionBase {
         return LocalTime.parse(strDate);
     }
 
+    protected Boolean isLocalTime(String strDate) {
+        try {
+            LocalTime.parse(strDate);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * リクエストパラメータから引数で指定したパラメータ名の値を返却する
      * @param key パラメータ名

@@ -3,6 +3,7 @@ package actions;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -79,7 +80,7 @@ public class ReportAction extends ActionBase {
         ReportView rv = new ReportView();
         rv.setReportDate(LocalDate.now());
         rv.setStartTime(LocalTime.of(9, 00));
-        rv.setEndTime(LocalTime.of(18,  00));
+        rv.setEndTime(LocalTime.of(18, 00));
         putRequestScope(AttributeConst.REPORT, rv); //日付のみ設定済みの日報インスタンス
 
         //新規登録画面を表示
@@ -106,11 +107,32 @@ public class ReportAction extends ActionBase {
                 day = LocalDate.parse(getRequestParam(AttributeConst.REP_DATE));
             }
 
-
-
             //セッションからログイン中の従業員情報を取得
             EmployeeView ev = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
 
+            if (!isLocalTime(getRequestParam(AttributeConst.REP_START_TIME))) {
+                List<String> errors = new ArrayList();
+                errors.add("出勤時刻を確認してください");
+                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                putRequestScope(AttributeConst.ERR, errors);//エラーのリスト
+
+                //新規登録画面を再表示
+                forward(ForwardConst.FW_REP_NEW);
+                return;
+
+            }
+
+            if (!isLocalTime(getRequestParam(AttributeConst.REP_END_TIME))) {
+                List<String> errors = new ArrayList();
+                errors.add("退勤時刻を確認してください");
+                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                putRequestScope(AttributeConst.ERR, errors);//エラーのリスト
+
+                //新規登録画面を再表示
+                forward(ForwardConst.FW_REP_NEW);
+                return;
+
+            }
             //パラメータの値をもとに日報情報のインスタンスを作成する
             ReportView rv = new ReportView(
                     null,
@@ -213,6 +235,30 @@ public class ReportAction extends ActionBase {
             //idを条件に日報データを取得する
             ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
 
+            if (!isLocalTime(getRequestParam(AttributeConst.REP_START_TIME))) {
+                List<String> errors = new ArrayList();
+                errors.add("出勤時刻を確認してください");
+                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                putRequestScope(AttributeConst.ERR, errors);//エラーのリスト
+
+                //新規登録画面を再表示
+                forward(ForwardConst.FW_REP_EDIT);
+                return;
+
+            }
+
+            if (!isLocalTime(getRequestParam(AttributeConst.REP_END_TIME))) {
+                List<String> errors = new ArrayList();
+                errors.add("退勤時刻を確認してください");
+                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                putRequestScope(AttributeConst.ERR, errors);//エラーのリスト
+
+                //新規登録画面を再表示
+                forward(ForwardConst.FW_REP_EDIT);
+                return;
+
+            }
+
             //入力された日報内容を設定する
             rv.setReportDate(toLocalDate(getRequestParam(AttributeConst.REP_DATE)));
             rv.setTitle(getRequestParam(AttributeConst.REP_TITLE));
@@ -221,6 +267,7 @@ public class ReportAction extends ActionBase {
             rv.setEndTime(toLocalTime(getRequestParam(AttributeConst.REP_END_TIME)));
 
             //日報データを更新する
+
             List<String> errors = service.update(rv);
 
             if (errors.size() > 0) {
